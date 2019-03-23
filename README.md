@@ -2,7 +2,7 @@
 ---
 https://github.com/josephreisinger/vowpal_porpoise
 
-```cc
+```py
 from vowpal_porpoise import VM
 
 VM = VM(moniker='test',
@@ -65,7 +65,43 @@ vm.learn("0 |this is a negative example")
 vm.finish
 ```
 
-```
+```py
+# vowpal_porpoise/vw.py
+from contextlib import contxtmanager
+import os
+import sys
+import subprocess
+import shlex
+import tempfile
+from vp_utils import safe_remove, VPLogger
+
+class VW:
+  def __init__(self,
+    logger=None,
+    vw='vw'):
+  assert moniker and passes
+  
+  if logger is None:
+    self.log = VPLogger()
+  else:
+    self.log = logger
+  
+  self.node = node
+  self.total = total
+  self.unique_id = unique_id
+  self.span_server = span_server
+  if self.node is not None:
+    assert self.total is not None
+    assert self.unique_id is not None
+    assert self.span_server is not None
+    
+  if name is None:
+    self.handle = '%s' % moniker
+  else:
+    self.handle = '%s.%s' % (moniker, name)
+    
+  if self.node is not None:
+    self.handle = "%s.%d" % (self.handle, self.node)
 ```
 
 ```
