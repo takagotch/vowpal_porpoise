@@ -102,6 +102,46 @@ class VW:
     
   if self.node is not None:
     self.handle = "%s.%d" % (self.handle, self.node)
+  
+  if old_model is None:
+    self.filename = '%s.model' % self.handle
+    self.incremental = False
+  else:
+    self.filename = old_model
+    self.incremental = True
+    
+  self.incremental = incremental
+  self.filename = '%s.model' % self.handle
+  
+  self.name = name
+  self.bits = bits
+  self.loss = loss
+  self.vw = vw
+  
+  if self.lda:
+    assert not self.l1
+    assert not self.l1
+  else:
+    assert not self.lda_D
+  
+  self.working_directory = working_dir or os.getcwd()
+  
+def vw_base_command(self, base):
+  l = base
+  if self.bits is not None: l.append('-b %d' % self.bits)
+  if self.laerning_rate is not None: l.append('--learning_rate=%f' % self.learning_rate)
+  return ' '.join(l)
+
+def vw_train_command(self, cache_file, model_file):
+  if os.path.exists(model_file) and self.incremental:
+    return self.vw_base_command([self.vw]) + ''
+  else:
+    self.log.debug()
+    return self.vw_base_command() + ''
+      % (self.passes, cache_file, model_file)
+
+def vw_test_command(self, model_file, prediction_file):
+  return self.vw_base_command([self.vw]) + ' -t -i %s -p %s' % (model_file, prediction_file)
 ```
 
 ```
